@@ -34,7 +34,7 @@ func(ds *dbStore) GetBooks() ([]*Book, error) {
 	books :=[]*Book{}
 	for rows.Next() {
 		book := &Book{}
-		if err := rows.Scan(&book.Title, book.Category, book.Description, book.Ratings); err != nil {
+		if err := rows.Scan(book.Title, book.Category, book.Description, book.Ratings); err != nil {
 			return nil,fmt.Errorf("cannot scan rows: %w", err)
 		}
 		books = append(books, book)
