@@ -1,20 +1,24 @@
 package main
+import (
+	"database/sql"
 
-// Author ..
-// type Author struct {
-// 	FirstName string `json:"firstName"`
-// 	LastName string `json:"lastName"`
-// }
-
-// Book ...
-type Book struct {
-	Title string `json:"title"`
-	Category string `json:"category"`
-	Author string `json:"author"`
-	Description string `json:"description"`
-	Ratings int `json:"ratings"`
-}
+	_ "github.com/lib/pq"
+)
 
 func main(){
+	conn := "dbname=<db connection> sslmode=disable"
+	db, err := sql.Open("postgres", conn)
 
+	if err != nil {
+		panic(err) //exit program
+	}
+	err = db.Ping()
+
+	if err != nil {
+		panic(err) //exit program
+	}
+
+	NewStore(&dbStore{db: db})
 }
+
+// Improve into library system (concurrency and authentication) Add logging and metrics
